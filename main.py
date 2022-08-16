@@ -1,11 +1,11 @@
 import getopt
 import pytube as yt
 import os
-from sys import argv
+from sys import argv, exit
 
 
 def help():
-    print(f"Usage: {argv[0]}.py -l link [-p, --playlist] [-o file/folder, --output file/folder] [-a, --audio]")
+    print(f"Usage: {argv[0]} -l link [-p, --playlist] [-o file/folder, --output file/folder] [-a, --audio]")
     print(f"-a, --audio\tDownload only audio instead of video.")
     print(f"-h, --help\tShows this information.")
     print(f"-l, --link\tSpecifies the link of the video or playlist")
@@ -70,7 +70,11 @@ def optionsHandler():
             restrictions = True
         else:
             continue
+    return link, onlyAudio, playList, restrictions, output, args
     
+    
+
+def exec(link, onlyAudio, playList, restrictions, output):
     if link == None:
         help()
 
@@ -88,8 +92,9 @@ def optionsHandler():
         downlaod(video, onlyAudio, output)
 
 
-def exec():
-    optionsHandler()
+def init():
+    link, onlyAudio, playList, restrictions, output, args = optionsHandler()
+    exec(link, onlyAudio, playList, restrictions, output)
 
 
-exec()
+init()
